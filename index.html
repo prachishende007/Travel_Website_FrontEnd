@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Plan your dream vacation with GlobeTrekker - personalized travel itineraries, expert recommendations, and budget-friendly options">
+    <title>GlobeTrekker | Your Personal Travel Planner</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <link rel="preload" href="https://unpkg.com/swiper/swiper-bundle.min.css" as="style">
+    <link rel="preload" href="https://unpkg.com/swiper/swiper-bundle.min.js" as="script">
+    
+    <!-- CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#0d9488',
+              secondary: '#f59e0b',
+              dark: '#111827',
+              light: '#f3f4f6'
+            },
+            fontFamily: {
+              sans: ['Poppins', 'sans-serif'],
+            },
+          }
+        }
+      }
+    </script>
+    
+    <style>
+      /* Custom styles */
+      .destination-card {
+        transition: all 0.3s ease;
+      }
+      .destination-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      }
+      .testimonial-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      .trip-form-container {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -2px;
+        left: 0;
+        background-color: #0d9488;
+        transition: width 0.3s ease;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+      }
+      .hero-text {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+    </style>
+  </head>
+  <body class="font-sans bg-gray-900 text-white">
+    <!-- Navigation Bar -->
+    <nav class="fixed w-full z-50 px-8 py-4 bg-white/90 backdrop-blur-sm shadow-md text-gray-800 transition-all duration-300">
+      <div class="container mx-auto flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl text-primary">🌐</span>
+          <a href="#" class="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">GlobeTrekker</a>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobileMenuButton" class="md:hidden text-gray-800 focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+        
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex space-x-8 font-medium items-center">
+          <li><a href="#destinations" class="nav-link hover:text-primary">Destinations</a></li>
+          <li><a href="#how-it-works" class="nav-link hover:text-primary">How it Works</a></li>
+          <li><a href="#testimonials" class="nav-link hover:text-primary">Testimonials</a></li>
+          <li><a href="#contact" class="nav-link hover:text-primary">Contact</a></li>
+          <li><a href="#" class="px-4 py-2 border border-primary rounded hover:bg-primary/10 transition">Sign In</a></li>
+          <li><a href="#" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition">Sign Up</a></li>
+        </ul>
+      </div>
+      
+      <!-- Mobile Menu -->
+      <div id="mobileMenu" class="md:hidden hidden bg-white w-full mt-4 py-4 px-6 rounded-lg shadow-xl">
+        <ul class="space-y-4">
+          <li><a href="#destinations" class="block hover:text-primary">Destinations</a></li>
+          <li><a href="#how-it-works" class="block hover:text-primary">How it Works</a></li>
+          <li><a href="#testimonials" class="block hover:text-primary">Testimonials</a></li>
+          <li><a href="#contact" class="block hover:text-primary">Contact</a></li>
+          <li class="pt-4 border-t border-gray-200">
+            <a href="#" class="block text-center px-4 py-2 border border-primary rounded hover:bg-primary/10">Sign In</a>
+          </li>
+          <li>
+            <a href="#" class="block text-center px-4 py-2 bg-primary text-white rounded hover:bg-primary/90">Sign Up</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen bg-cover bg-center flex items-center" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');">
+      <div class="absolute inset-0 bg-black/60"></div>
+      <div class="relative z-10 container mx-auto px-6">
+        <div class="max-w-2xl" data-aos="fade-right" data-aos-duration="800">
+          <p class="text-secondary text-lg font-semibold mb-4">📍 Discover the world's beauty</p>
+          <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6 hero-text">
+            Start Your Dream<br />
+            Journey with <span class="text-primary">GlobeTrekker</span>
+          </h1>
+          <p class="text-lg mb-8 text-gray-200 max-w-xl">
+            Plan your perfect trip with expert recommendations, budget-friendly options, and personalized itineraries for unforgettable adventures.
+          </p>
+          <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="#trip-planner" class="bg-primary hover:bg-primary/90 px-6 py-3 rounded-lg font-semibold text-center transition shadow-lg hover:shadow-xl">Plan Your Trip</a>
+            <a href="#" class="bg-white text-gray-800 px-6 py-3 rounded-lg font-semibold text-center hover:bg-gray-100 transition shadow-lg hover:shadow-xl">Sign Up Now</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Scroll Down Indicator -->
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <a href="#trip-planner" class="text-white text-2xl">
+          <i class="fas fa-chevron-down"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-gray-800">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div class="p-6" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-4xl font-bold text-primary mb-2">10K+</h3>
+            <p class="text-gray-300">Happy Travelers</p>
+          </div>
+          <div class="p-6" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="text-4xl font-bold text-primary mb-2">150+</h3>
+            <p class="text-gray-300">Destinations</p>
+          </div>
+          <div class="p-6" data-aos="fade-up" data-aos-delay="300">
+            <h3 class="text-4xl font-bold text-primary mb-2">24/7</h3>
+            <p class="text-gray-300">Support</p>
+          </div>
+          <div class="p-6" data-aos="fade-up" data-aos-delay="400">
+            <h3 class="text-4xl font-bold text-primary mb-2">95%</h3>
+            <p class="text-gray-300">Satisfaction Rate</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trip Form Section -->
+    <section id="trip-planner" class="py-16 bg-gray-100 text-gray-900">
+      <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto trip-form-container p-8 md:p-10" data-aos="zoom-in">
+          <h2 class="text-3xl font-bold mb-2 text-center">Plan Your Perfect Trip</h2>
+          <p class="text-gray-600 mb-8 text-center">Tell us about your dream vacation and we'll create a personalized itinerary</p>
+          
+          <form id="tripForm" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="destination" class="block text-sm font-medium text-gray-700 mb-1">Destination</label>
+                <input type="text" id="destination" placeholder="Where do you want to go?" 
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div>
+                <label for="trip-type" class="block text-sm font-medium text-gray-700 mb-1">Trip Type</label>
+                <select id="trip-type" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                  <option value="">Select trip type</option>
+                  <option value="beach">Beach Vacation</option>
+                  <option value="mountain">Mountain Adventure</option>
+                  <option value="city">City Break</option>
+                  <option value="cultural">Cultural Exploration</option>
+                  <option value="roadtrip">Road Trip</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="start-date" class="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                <input type="date" id="start-date" 
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+              <div>
+                <label for="end-date" class="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                <input type="date" id="end-date" 
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label for="budget" class="block text-sm font-medium text-gray-700 mb-1">Budget (per person)</label>
+                <div class="relative">
+                  <span class="absolute left-3 top-3 text-gray-500">₹</span>
+                  <input type="number" id="budget" placeholder="Estimated budget" 
+                         class="w-full pl-8 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                </div>
+              </div>
+              <div>
+                <label for="travelers" class="block text-sm font-medium text-gray-700 mb-1">Number of Travelers</label>
+                <input type="number" id="travelers" min="1" value="1" 
+                       class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+              </div>
+            </div>
+            
+            <div>
+              <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Special Requirements</label>
+              <textarea id="notes" rows="3" placeholder="Dietary needs, accessibility requirements, special interests..." 
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"></textarea>
+            </div>
+            
+            <div class="pt-4">
+              <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-semibold transition shadow-lg hover:shadow-xl flex items-center justify-center">
+                <i class="fas fa-paper-plane mr-2"></i> Create My Travel Plan
+              </button>
+            </div>
+            
+            <div id="responseMsg" class="text-center py-2"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Popular Destinations Section -->
+    <section id="destinations" class="py-16 bg-gray-900">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <h2 class="text-3xl font-bold mb-4">Popular Destinations</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">Discover our most sought-after travel destinations curated by our community of globetrotters</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Destination 1 -->
+          <div class="destination-card rounded-xl overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="100">
+            <div class="relative h-64">
+              <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e" alt="Bali" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 p-6">
+                <h3 class="text-xl font-bold text-white">Bali, Indonesia</h3>
+                <p class="text-gray-200">From ₹35,000</p>
+              </div>
+              <div class="absolute top-4 right-4">
+                <button class="bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
+            </div>
+            <div class="bg-gray-800 p-6">
+              <p class="text-gray-300 mb-4">A tropical paradise known for its stunning beaches, vibrant culture, and rich history.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                  <i class="fas fa-star text-yellow-400 mr-1"></i>
+                  <span class="text-white">4.8</span>
+                  <span class="text-gray-400 ml-1">(1.2k reviews)</span>
+                </div>
+                <a href="#" class="text-primary hover:text-primary/80 font-medium">Explore</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Destination 2 -->
+          <div class="destination-card rounded-xl overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="200">
+            <div class="relative h-64">
+              <img src="https://i.pinimg.com/736x/6b/a9/de/6ba9dee51e8cc7fcc1e270a89c37cc15.jpg" alt="Maldives" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 p-6">
+                <h3 class="text-xl font-bold text-white">Maldives</h3>
+                <p class="text-gray-200">From ₹65,000</p>
+              </div>
+              <div class="absolute top-4 right-4">
+                <button class="bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
+            </div>
+            <div class="bg-gray-800 p-6">
+              <p class="text-gray-300 mb-4">Famous for its crystal-clear waters, luxurious resorts, and incredible marine life.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                  <i class="fas fa-star text-yellow-400 mr-1"></i>
+                  <span class="text-white">4.9</span>
+                  <span class="text-gray-400 ml-1">(980 reviews)</span>
+                </div>
+                <a href="#" class="text-primary hover:text-primary/80 font-medium">Explore</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Destination 3 -->
+          <div class="destination-card rounded-xl overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="300">
+            <div class="relative h-64">
+              <img src="https://i.pinimg.com/736x/fd/86/fb/fd86fbdf75b30daf6e21277c9e47596b.jpg" alt="Kerala" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 p-6">
+                <h3 class="text-xl font-bold text-white">Kerala, India</h3>
+                <p class="text-gray-200">From ₹18,000</p>
+              </div>
+              <div class="absolute top-4 right-4">
+                <button class="bg-white/20 backdrop-blur-sm text-white p-2 rounded-full hover:bg-white/30 transition">
+                  <i class="far fa-heart"></i>
+                </button>
+              </div>
+            </div>
+            <div class="bg-gray-800 p-6">
+              <p class="text-gray-300 mb-4">Known for its backwaters, hill stations, and rich cultural heritage.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                  <i class="fas fa-star text-yellow-400 mr-1"></i>
+                  <span class="text-white">4.7</span>
+                  <span class="text-gray-400 ml-1">(1.5k reviews)</span>
+                </div>
+                <a href="#" class="text-primary hover:text-primary/80 font-medium">Explore</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-12">
+          <a href="#" class="inline-block px-6 py-3 border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition">
+            View All Destinations <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-16 bg-gray-100 text-gray-900">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <h2 class="text-3xl font-bold mb-4">How GlobeTrekker Works</h2>
+          <p class="text-gray-600 max-w-2xl mx-auto">Plan your perfect trip in just a few simple steps</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Step 1 -->
+          <div class="bg-white p-8 rounded-xl shadow-md text-center" data-aos="fade-up" data-aos-delay="100">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <span class="text-primary text-2xl font-bold">1</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Tell Us Your Preferences</h3>
+            <p class="text-gray-600">Share your travel style, budget, and dream destinations with us.</p>
+          </div>
+          
+          <!-- Step 2 -->
+          <div class="bg-white p-8 rounded-xl shadow-md text-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <span class="text-primary text-2xl font-bold">2</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Get Personalized Itinerary</h3>
+            <p class="text-gray-600">Our experts create a customized travel plan just for you.</p>
+          </div>
+          
+          <!-- Step 3 -->
+          <div class="bg-white p-8 rounded-xl shadow-md text-center" data-aos="fade-up" data-aos-delay="300">
+            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+              <span class="text-primary text-2xl font-bold">3</span>
+            </div>
+            <h3 class="text-xl font-bold mb-3">Enjoy Your Dream Trip</h3>
+            <p class="text-gray-600">Pack your bags and experience unforgettable adventures.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-16 bg-gray-900">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-12" data-aos="fade-up">
+          <h2 class="text-3xl font-bold mb-4">Traveler Stories</h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">Hear from our community of happy travelers</p>
+        </div>
+        
+        <!-- Swiper Testimonials -->
+        <div class="swiper-container testimonial-slider" data-aos="fade-up">
+          <div class="swiper-wrapper pb-12">
+            <!-- Testimonial 1 -->
+            <div class="swiper-slide">
+              <div class="testimonial-card p-8 rounded-xl max-w-2xl mx-auto">
+                <div class="flex items-center mb-6">
+                  <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah" class="w-12 h-12 rounded-full object-cover">
+                  <div class="ml-4">
+                    <h4 class="font-bold">Sarah Johnson</h4>
+                    <p class="text-gray-400 text-sm">Traveled to Bali</p>
+                  </div>
+                </div>
+                <p class="text-gray-300 mb-4">"GlobeTrekker made planning our honeymoon so easy! The personalized itinerary included all the romantic spots we wanted to visit, plus some hidden gems we would have never found on our own."</p>
+                <div class="flex">
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="swiper-slide">
+              <div class="testimonial-card p-8 rounded-xl max-w-2xl mx-auto">
+                <div class="flex items-center mb-6">
+                  <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Raj" class="w-12 h-12 rounded-full object-cover">
+                  <div class="ml-4">
+                    <h4 class="font-bold">Raj Patel</h4>
+                    <p class="text-gray-400 text-sm">Traveled to Switzerland</p>
+                  </div>
+                </div>
+                <p class="text-gray-300 mb-4">"I was skeptical about using a travel planner, but GlobeTrekker exceeded all expectations. They found amazing deals and created an itinerary that perfectly matched my adventure style."</p>
+                <div class="flex">
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="swiper-slide">
+              <div class="testimonial-card p-8 rounded-xl max-w-2xl mx-auto">
+                <div class="flex items-center mb-6">
+                  <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Maria" class="w-12 h-12 rounded-full object-cover">
+                  <div class="ml-4">
+                    <h4 class="font-bold">Maria Garcia</h4>
+                    <p class="text-gray-400 text-sm">Traveled to Japan</p>
+                  </div>
+                </div>
+                <p class="text-gray-300 mb-4">"As a solo female traveler, safety was my top concern. GlobeTrekker planned an amazing trip to Japan with accommodations and transportation that made me feel completely secure."</p>
+                <div class="flex">
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                  <i class="fas fa-star text-yellow-400"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-primary text-white">
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl mx-auto text-center" data-aos="fade-up">
+          <h2 class="text-3xl font-bold mb-4">Get Travel Inspiration</h2>
+          <p class="mb-8">Subscribe to our newsletter for exclusive travel deals, destination guides, and insider tips.</p>
+          
+          <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input type="email" placeholder="Your email address" 
+                   class="flex-grow px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-white">
+            <button type="submit" class="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+              Subscribe
+            </button>
+          </form>
+          
+          <p class="text-sm mt-4 text-white/80">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-800 text-gray-400 py-12">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <!-- Column 1 -->
+          <div>
+            <h3 class="text-white text-lg font-bold mb-4">GlobeTrekker</h3>
+            <p class="mb-4">Making dream vacations a reality through personalized travel planning.</p>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white transition">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Column 2 -->
+          <div>
+            <h3 class="text-white text-lg font-bold mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-white transition">Home</a></li>
+              <li><a href="#destinations" class="hover:text-white transition">Destinations</a></li>
+              <li><a href="#how-it-works" class="hover:text-white transition">How It Works</a></li>
+              <li><a href="#testimonials" class="hover:text-white transition">Testimonials</a></li>
+              <li><a href="#" class="hover:text-white transition">Blog</a></li>
+            </ul>
+          </div>
+          
+          <!-- Column 3 -->
+          <div>
+            <h3 class="text-white text-lg font-bold mb-4">Support</h3>
+            <ul class="space-y-2">
+              <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+              <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+              <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+              <li><a href="#" class="hover:text-white transition">Terms of Service</a></li>
+              <li><a href="#" class="hover:text-white transition">Refund Policy</a></li>
+            </ul>
+          </div>
+          
+          <!-- Column 4 -->
+          <div>
+            <h3 class="text-white text-lg font-bold mb-4">Contact Us</h3>
+            <ul class="space-y-2">
+              <li class="flex items-center">
+                <i class="fas fa-map-marker-alt mr-3"></i>
+                <span>123 Travel Street, Mumbai, India</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-phone-alt mr-3"></i>
+                <span>+91 98765 43210</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-envelope mr-3"></i>
+                <span>hello@globetrekker.com</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+          <p>&copy; 2023 GlobeTrekker. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-primary text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Main JavaScript -->
+    <script>
+      // Initialize AOS animations
+      AOS.init({
+        duration: 800,
+        easing: 'ease-in-out',
+        once: true
+      });
+      
+      // Mobile menu toggle
+      const mobileMenuButton = document.getElementById('mobileMenuButton');
+      const mobileMenu = document.getElementById('mobileMenu');
+      
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+      
+      // Initialize Swiper
+      const testimonialSwiper = new Swiper('.testimonial-slider', {
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+      });
+      
+      // Back to top button
+      const backToTopButton = document.getElementById('backToTop');
+      
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.remove('opacity-0', 'invisible');
+          backToTopButton.classList.add('opacity-100', 'visible');
+        } else {
+          backToTopButton.classList.remove('opacity-100', 'visible');
+          backToTopButton.classList.add('opacity-0', 'invisible');
+        }
+      });
+      
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Form submission
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('tripForm');
+        const responseMsg = document.getElementById('responseMsg');
+        
+        if (!form) return;
+        
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          
+          const destination = document.getElementById('destination');
+          const tripType = document.getElementById('trip-type');
+          const startDate = document.getElementById('start-date');
+          const endDate = document.getElementById('end-date');
+          const budget = document.getElementById('budget');
+          const travelers = document.getElementById('travelers');
+          const notes = document.getElementById('notes');
+          
+          if (!destination.value.trim() || !startDate.value.trim() || !endDate.value.trim() || !budget.value.trim()) {
+            showMessage('Please fill in all required fields.', 'error');
+            return;
+          }
+          
+          const tripData = {
+            destination: destination.value.trim(),
+            tripType: tripType.value,
+            startDate: startDate.value,
+            endDate: endDate.value,
+            budget: budget.value,
+            travelers: travelers.value,
+            notes: notes.value.trim()
+          };
+          
+          try {
+            // Simulate API call (replace with actual fetch in production)
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Show success message
+            Swal.fire({
+              icon: 'success',
+              title: 'Trip Plan Created!',
+              text: 'Your personalized travel itinerary will be sent to your email within 24 hours.',
+              confirmButtonColor: '#0d9488',
+            });
+            
+            form.reset();
+            showMessage('', '');
+          } catch (err) {
+            showMessage('⚠ Network error. Please try again.', 'error');
+          }
+        });
+        
+        function showMessage(message, type = 'info') {
+          if (!responseMsg) return;
+          responseMsg.textContent = message;
+          responseMsg.className = ''; // Clear previous classes
+          
+          if (type === 'success') {
+            responseMsg.classList.add('text-green-500');
+          } else if (type === 'error') {
+            responseMsg.classList.add('text-red-500');
+          } else {
+            responseMsg.classList.add('text-gray-600');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
